@@ -1,0 +1,16 @@
+# .NET
+bin/
+obj/
+*.user
+.vs/
+
+# Frontend
+frontend/node_modules/
+frontend/.vite/
+
+# SQLite
+*.sqlite
+
+# OS
+Thumbs.db
+.DS_Store

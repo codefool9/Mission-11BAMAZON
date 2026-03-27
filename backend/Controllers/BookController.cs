@@ -16,27 +16,35 @@ namespace Mission_11BAMAZON_.Controllers
         }
 
         [HttpGet("AllBooks")]
-        public IActionResult GetBooks(int pageSize = 5, int pageNum = 1, string? sortBy = null)
+        public IActionResult GetBooks(int pageSize = 5, int pageNum = 1, string? sortBy = null, string? category = null)
         {
-               var query = _bookContext.Books.AsQueryable();
-            
-               if (sortBy == "title")
-               {
-                   query = query.OrderBy(b => b.Title);
-               }
+            var query = _bookContext.Books.AsQueryable();
 
-               var books = query
-                   .Skip((pageNum - 1) * pageSize)
-                   .Take(pageSize)
-                   .ToList();
+            if (!string.IsNullOrEmpty(category))
+                query = query.Where(b => b.Category == category);
 
-               var totalNumBooks = _bookContext.Books.Count();
+            if (sortBy == "title")
+                query = query.OrderBy(b => b.Title);
 
-               return Ok(new
-               {
-                   Books = books,
-                   TotalNumBooks = totalNumBooks
-               });
+            var totalNumBooks = query.Count();
+
+            var books = query
+                .Skip((pageNum - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
+
+            return Ok(new { Books = books, TotalNumBooks = totalNumBooks });
+        }
+
+        [HttpGet("Categories")]
+        public IActionResult GetCategories()
+        {
+            var categories = _bookContext.Books
+                .Select(b => b.Category)
+                .Distinct()
+                .OrderBy(c => c)
+                .ToList();
+            return Ok(categories);
         }
     }
 }

@@ -1,5 +1,27 @@
+:root {
+  --text: #6b6375;
+  --text-h: #08060d;
+  --bg: #fff;
+  --border: #e5e4e7;
+  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
+  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
+}
+
 body {
   margin: 0;
-  font-family: system-ui, 'Segoe UI', Roboto, sans-serif;
-  background-color: #f8f9fa;
+  font-family: var(--sans);
+  color: var(--text);
+  background: var(--bg);
+}
+
+#root {
+  max-width: 1126px;
+  margin: 0 auto;
+  min-height: 100vh;
+}
+
+h1, h2, h3 {
+  font-family: var(--heading);
+  font-weight: 500;
+  color: var(--text-h);
 }
